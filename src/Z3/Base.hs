@@ -106,6 +106,7 @@ module Z3.Base (
   , mkRealSort
   , mkBvSort
   , mkArraySort
+  , mkSeqSort
   , mkTupleSort
   , mkConstructor
   , mkDatatype
@@ -229,6 +230,17 @@ module Z3.Base (
   , mkSetComplement
   , mkSetMember
   , mkSetSubset
+
+  -- * Sequences
+  , mkEmptySeq
+  , mkUnitSeq
+  , mkSeqConcat
+  , mkSeqPrefix
+  , mkSeqSuffix
+  , mkSeqContains
+  , mkSeqExtract
+  , mkSeqAt
+  , mkSeqLength
 
   -- * Numerals
   , mkNumeral
@@ -563,6 +575,7 @@ data SortKind
     | Z3_FINITE_DOMAIN_SORT
     | Z3_FLOATING_POINT_SORT
     | Z3_ROUNDING_MODE_SORT
+    | Z3_SEQ_SORT
     | Z3_UNKNOWN_SORT
     deriving (Eq, Show)
 
@@ -753,6 +766,10 @@ mkBvSort c i
 -- Arrays are usually used to model the heap/memory in software verification.
 mkArraySort :: Context -> Sort -> Sort -> IO Sort
 mkArraySort = liftFun2 z3_mk_array_sort
+
+-- | Create a sequence type
+mkSeqSort :: Context -> Sort -> IO Sort
+mkSeqSort = liftFun1 z3_mk_seq_sort
 
 {- TODO
 data TupleTyple
@@ -1425,6 +1442,56 @@ mkSetSubset :: Context
           -> AST      -- ^ Second set.
           -> IO AST
 mkSetSubset = liftFun2 z3_mk_set_subset
+
+---------------------------------------------------------------------
+-- * Sequences
+
+mkEmptySeq :: Context
+           -> Sort -- ^ Sequence sort.
+           -> IO AST
+mkEmptySeq = liftFun1 z3_mk_seq_empty
+
+mkUnitSeq :: Context
+          -> AST -- ^ Sequence sort.
+          -> IO AST
+mkUnitSeq = liftFun1 z3_mk_seq_unit
+
+mkSeqConcat :: Context -> NonEmpty AST -> IO AST
+mkSeqConcat = liftAstN1 z3_mk_seq_concat
+
+mkSeqPrefix :: Context
+            -> AST -- ^ Prefix.
+            -> AST
+            -> IO AST
+mkSeqPrefix = liftFun2 z3_mk_seq_prefix
+
+mkSeqSuffix :: Context
+            -> AST -- ^ Suffix.
+            -> AST
+            -> IO AST
+mkSeqSuffix = liftFun2 z3_mk_seq_suffix
+
+mkSeqContains :: Context
+              -> AST -- ^ Container.
+              -> AST -- ^ Containee.
+              -> IO AST
+mkSeqContains = liftFun2 z3_mk_seq_contains
+
+mkSeqExtract :: Context
+             -> AST
+             -> AST -- ^ Offset.
+             -> AST -- ^ Length.
+             -> IO AST
+mkSeqExtract = liftFun3 z3_mk_seq_extract
+
+mkSeqAt :: Context
+        -> AST
+        -> AST -- ^ Index.
+        -> IO AST
+mkSeqAt = liftFun2 z3_mk_seq_at
+
+mkSeqLength :: Context -> AST -> IO AST
+mkSeqLength = liftFun1 z3_mk_seq_length
 
 ---------------------------------------------------------------------
 -- * Numerals

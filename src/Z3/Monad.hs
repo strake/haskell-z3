@@ -65,6 +65,7 @@ module Z3.Monad
   , mkRealSort
   , mkBvSort
   , mkArraySort
+  , mkSeqSort
   , mkTupleSort
   , mkConstructor
   , mkDatatype
@@ -188,6 +189,17 @@ module Z3.Monad
   , mkSetComplement
   , mkSetMember
   , mkSetSubset
+
+  -- * Sequences
+  , mkEmptySeq
+  , mkUnitSeq
+  , mkSeqConcat
+  , mkSeqPrefix
+  , mkSeqSuffix
+  , mkSeqContains
+  , mkSeqExtract
+  , mkSeqAt
+  , mkSeqLength
 
   -- * Numerals
   , mkNumeral
@@ -664,6 +676,9 @@ mkBvSort = liftFun1 Base.mkBvSort
 --
 mkArraySort :: MonadZ3 z3 => Sort -> Sort -> z3 Sort
 mkArraySort = liftFun2 Base.mkArraySort
+
+mkSeqSort :: MonadZ3 z3 => Sort -> z3 Sort
+mkSeqSort = liftFun1 Base.mkSeqSort
 
 -- | Create a tuple type
 --
@@ -1376,6 +1391,36 @@ mkSetMember = liftFun2 Base.mkSetMember
 -- Reference: <http://research.microsoft.com/en-us/um/redmond/projects/z3/group__capi.html#ga139c5803af0e86464adc7cedc53e7f3a>
 mkSetSubset :: MonadZ3 z3 => AST -> AST -> z3 AST
 mkSetSubset = liftFun2 Base.mkSetSubset
+
+---------------------------------------------------------------------
+-- * Sequences
+
+mkEmptySeq :: MonadZ3 z3 => Sort -> z3 AST
+mkEmptySeq = liftFun1 Base.mkEmptySeq
+
+mkUnitSeq :: MonadZ3 z3 => AST -> z3 AST
+mkUnitSeq = liftFun1 Base.mkUnitSeq
+
+mkSeqConcat :: MonadZ3 z3 => NonEmpty AST -> z3 AST
+mkSeqConcat = liftFun1 Base.mkSeqConcat
+
+mkSeqPrefix :: MonadZ3 z3 => AST -> AST -> z3 AST
+mkSeqPrefix = liftFun2 Base.mkSeqPrefix
+
+mkSeqSuffix :: MonadZ3 z3 => AST -> AST -> z3 AST
+mkSeqSuffix = liftFun2 Base.mkSeqSuffix
+
+mkSeqContains :: MonadZ3 z3 => AST -> AST -> z3 AST
+mkSeqContains = liftFun2 Base.mkSeqContains
+
+mkSeqExtract :: MonadZ3 z3 => AST -> AST -> AST -> z3 AST
+mkSeqExtract = liftFun3 Base.mkSeqExtract
+
+mkSeqAt :: MonadZ3 z3 => AST -> AST -> z3 AST
+mkSeqAt = liftFun2 Base.mkSeqAt
+
+mkSeqLength :: MonadZ3 z3 => AST -> z3 AST
+mkSeqLength = liftFun1 Base.mkSeqLength
 
 ---------------------------------------------------------------------
 -- * Numerals

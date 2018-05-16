@@ -254,6 +254,11 @@ foreign import ccall unsafe "Z3_mk_array_sort"
                      -> Ptr Z3_sort  -- ^ range
                      -> IO (Ptr Z3_sort)
 
+foreign import ccall unsafe "Z3_mk_seq_sort"
+    z3_mk_seq_sort :: Ptr Z3_context
+                   -> Ptr Z3_sort
+                   -> IO (Ptr Z3_sort)
+
 -- | Reference: <http://z3prover.github.io/api/html/group__capi.html#ga7156b9c0a76a28fae46c81f8e3cdf0f1>
 foreign import ccall unsafe "Z3_mk_tuple_sort"
     z3_mk_tuple_sort :: Ptr Z3_context
@@ -726,6 +731,36 @@ foreign import ccall unsafe "Z3_mk_set_member"
 -- | Reference: <http://z3prover.github.io/api/html/group__capi.html#ga139c5803af0e86464adc7cedc53e7f3a>
 foreign import ccall unsafe "Z3_mk_set_subset"
     z3_mk_set_subset :: Ptr Z3_context -> Ptr Z3_ast -> Ptr Z3_ast -> IO (Ptr Z3_ast)
+
+---------------------------------------------------------------------
+-- * Sequences
+
+foreign import ccall unsafe "Z3_mk_seq_empty"
+    z3_mk_seq_empty :: Ptr Z3_context -> Ptr Z3_sort -> IO (Ptr Z3_ast)
+
+foreign import ccall unsafe "Z3_mk_seq_unit"
+    z3_mk_seq_unit :: Ptr Z3_context -> Ptr Z3_ast -> IO (Ptr Z3_ast)
+
+foreign import ccall unsafe "Z3_mk_seq_concat"
+    z3_mk_seq_concat :: Ptr Z3_context -> CUInt -> Ptr (Ptr Z3_ast) -> IO (Ptr Z3_ast)
+
+foreign import ccall unsafe "Z3_mk_seq_prefix"
+    z3_mk_seq_prefix :: Ptr Z3_context -> Ptr Z3_ast -> Ptr Z3_ast -> IO (Ptr Z3_ast)
+
+foreign import ccall unsafe "Z3_mk_seq_suffix"
+    z3_mk_seq_suffix :: Ptr Z3_context -> Ptr Z3_ast -> Ptr Z3_ast -> IO (Ptr Z3_ast)
+
+foreign import ccall unsafe "Z3_mk_seq_contains"
+    z3_mk_seq_contains :: Ptr Z3_context -> Ptr Z3_ast -> Ptr Z3_ast -> IO (Ptr Z3_ast)
+
+foreign import ccall unsafe "Z3_mk_seq_extract"
+    z3_mk_seq_extract :: Ptr Z3_context -> Ptr Z3_ast -> Ptr Z3_ast -> Ptr Z3_ast -> IO (Ptr Z3_ast)
+
+foreign import ccall unsafe "Z3_mk_seq_at"
+    z3_mk_seq_at :: Ptr Z3_context -> Ptr Z3_ast -> Ptr Z3_ast -> IO (Ptr Z3_ast)
+
+foreign import ccall unsafe "Z3_mk_seq_length"
+    z3_mk_seq_length :: Ptr Z3_context -> Ptr Z3_ast -> IO (Ptr Z3_ast)
 
 ---------------------------------------------------------------------
 -- * Numerals
