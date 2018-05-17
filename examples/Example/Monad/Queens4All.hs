@@ -5,6 +5,7 @@ module Example.Monad.Queens4All
 
 import Control.Applicative
 import Control.Monad ( join )
+import Data.List.NonEmpty
 import Data.Maybe
 import qualified Data.Traversable as T
 
@@ -74,4 +75,4 @@ script = do
           join $ mkIte <$> mkLe _0 x <*> pure x <*> mkUnaryMinus x
         diagonal :: Integer -> AST -> AST -> Z3 AST
         diagonal d c c' =
-          join $ mkEq <$> (mkAbs =<< mkSub [c',c]) <*> (mkIntNum d)
+          join $ mkEq <$> (mkAbs =<< mkSub (c':|[c])) <*> (mkIntNum d)

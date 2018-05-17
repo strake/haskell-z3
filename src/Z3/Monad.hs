@@ -416,6 +416,7 @@ import Control.Monad.IO.Class ( MonadIO, liftIO )
 import Control.Monad.Trans.Reader ( ReaderT, runReaderT, asks )
 import Control.Monad.Fix ( MonadFix )
 import Data.Int ( Int64 )
+import Data.List.NonEmpty (NonEmpty)
 import Data.Word ( Word, Word64 )
 import Data.Traversable ( Traversable )
 import qualified Data.Traversable as T
@@ -892,8 +893,10 @@ mkMul = liftFun1 Base.mkMul
 
 -- | Create an AST node representing args[0] - ... - args[num_args - 1].
 --
+-- Requires a non-empty list.
+--
 -- Reference: <http://research.microsoft.com/en-us/um/redmond/projects/z3/group__capi.html#ga4f5fea9b683f9e674fd8f14d676cc9a9>
-mkSub :: MonadZ3 z3 => [AST] -> z3 AST
+mkSub :: MonadZ3 z3 => NonEmpty AST -> z3 AST
 mkSub = liftFun1 Base.mkSub
 
 -- | Create an AST node representing -arg.
@@ -1456,7 +1459,7 @@ mkBvNum = liftFun2 Base.mkBvNum
 ---------------------------------------------------------------------
 -- Quantifiers
 
-mkPattern :: MonadZ3 z3 => [AST] -> z3 Pattern
+mkPattern :: MonadZ3 z3 => NonEmpty AST -> z3 Pattern
 mkPattern = liftFun1 Base.mkPattern
 
 mkBound :: MonadZ3 z3 => Int -> Sort -> z3 AST
