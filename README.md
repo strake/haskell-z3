@@ -15,8 +15,7 @@ these bindings are targeted to those who want to build verification tools on top
 
 Preferably use the [z3](http://hackage.haskell.org/package/z3) package.
 
-* Install a [Z3](https://github.com/Z3Prover/z3) *4.x* release.
-  (Support for Z3 *3.x* is provided by the *0.3.2* version of these bindings.)
+* Install a [Z3](https://github.com/Z3Prover/z3) *4.8.x* release.
 * Just type _cabal install z3_ if you used the standard locations for dynamic libraries (_/usr/lib_) and header files (_/usr/include_).
 
     * Otherwise use the _--extra-lib-dirs_ and _--extra-include-dirs_ Cabal flags when installing.
