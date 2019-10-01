@@ -1,4 +1,4 @@
-Name:                Z3
+Name:                hz3
 Version:             96.0.0.0
 Synopsis:            Bindings for the Z3 Theorem Prover
 Description:
@@ -85,7 +85,7 @@ Flag examples
 Executable examples
   if flag(examples)
     Buildable:         True
-    Build-depends:     Z3,
+    Build-depends:     hz3,
                        base >=4.5,
                        containers,
                        transformers >= 0.2
@@ -120,7 +120,7 @@ Test-suite spec
 
     Other-modules:      Z3.Base.Spec
 
-    Build-depends:      Z3,
+    Build-depends:      hz3,
                         base >= 4.5,
                         hspec >= 2.1,
                         QuickCheck >= 2.5.1
